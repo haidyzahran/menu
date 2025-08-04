@@ -209,7 +209,7 @@ a {
 /* nav done */
 
 /* --- hero block --- */
-.hero {
+.hero { 
     min-height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
@@ -218,7 +218,7 @@ a {
     text-align: center;
     color: #ededed;
     width: 100%;
-    background-image: linear-gradient(rgba(4, 9, 30, .7), rgba(4, 9, 30, .7)), url(/assets/images/home.png);
+    /* background-image: linear-gradient(rgba(4, 9, 30, .7), rgba(4, 9, 30, .7)), url(/assets/images/home.png); */
     background-position: center;
     background-size: cover;
     position: relative;
