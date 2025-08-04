@@ -1,0 +1,183 @@
+<body>
+
+  <button class="toggle-btn" (click)="toggleMenu()">
+    <i [ngClass]="menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+  </button>
+
+  <div class="dashboard-container">
+
+    <!---- sidebar ---->
+    <aside class="sidebar" [ngClass]="{'sidebar-hidden': !menuOpen && isMobile}">
+      <h2>لوحة التحكم</h2>
+      <div class="sidebar-items">
+        <ul>
+          <li><button (click)="showSection('hero')">اللوجو والصورة الرئيسية</button></li>
+          <li><button (click)="showSection('colors')">الألوان</button></li>
+          <li><button (click)="showSection('menu')">قائمة الطعام</button></li>
+          <li><button (click)="showSection('offers')">شريط العرض</button></li>
+          <li><button (click)="showSection('slider')">صور العرض</button></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content">
+
+      <!---- logo & hero section ---->
+      <section *ngIf="activeSection === 'hero'" class="dashboard-section">
+        <h3>غير اللوجو والصورة الرئيسية</h3>
+
+        <!---- logo ---->
+        <label>ارفع صورة للوجو:
+          <input type="file" accept="image/*" (change)="onLogoChange($event)">
+        </label>
+        <div *ngIf="selectedLogo">
+          <img [src]="selectedLogo" width="100" class="m-1">
+          <br>
+          <button (click)="saveLogo()" class="m-1">حفظ</button>
+          <button (click)="cancelLogo()" class="m-1 btn bg-danger">إلغاء</button>
+        </div>
+
+        <br><br>
+
+        <!---- hero block image ---->
+        <label>ارفع الصورة الرئيسية:
+          <input type="file" accept="image/*" (change)="onHeroImageChange($event)">
+        </label>
+        <div *ngIf="selectedHeroImage">
+          <img [src]="selectedHeroImage" width="200">
+          <br>
+          <button (click)="saveHeroImage()" class="m-1">حفظ</button>
+          <button (click)="cancelHeroImage()" class="m-1 btn bg-danger">إلغاء</button>
+        </div>
+      </section>
+
+
+      <!---- colors ---->
+      <section *ngIf="activeSection === 'colors'" class="dashboard-section">
+        <h3>غير الألوان</h3>
+      
+        <label>
+          اللون الأساسي:
+          <input type="color" (change)="onPrimaryColorChange($event)">
+        </label>
+      
+        <div *ngIf="selectedPrimaryColor">
+          <p>اللون المختار: <span [style.background]="selectedPrimaryColor" style="display:inline-block;width:30px;height:20px;border:1px solid #000;"></span></p>
+          <button (click)="savePrimaryColor()" class="m-1">حفظ</button>
+          <button (click)="cancelPrimaryColor()" class="m-1 btn bg-danger">إلغاء</button>
+        </div>
+      
+        <br><br>
+      
+        <label>
+          لون الارضية:
+          <input type="color" (change)="onBgColorChange($event)">
+        </label>
+      
+        <div *ngIf="selectedBgColor">
+          <p>اللون المختار: <span [style.background]="selectedBgColor" style="display:inline-block;width:30px;height:20px;border:1px solid #000;"></span></p>
+          <button (click)="saveBgColor()" class="m-1">حفظ</button>
+          <button (click)="cancelBgColor()" class="m-1 btn bg-danger">إلغاء</button>
+        </div>
+      </section>
+
+
+      <!---- menu edit & show ---->
+      <section *ngIf="activeSection === 'menu'" class="dashboard-section">
+        <h3>قائمة الطعام</h3>
+
+        <!---- add new item to meun ---->
+        <div class="add-form">
+          <input class="m-1 d-block" type="text" placeholder="الركن">
+          <input class="m-1 d-block" type="text" placeholder="الصنف">
+          <input class="m-1 d-block" type="text" placeholder="الوصف">
+          <input class="m-1 d-block" type="number" placeholder="السعر">
+          <button class="m-1 d-block">ضيف</button>
+        </div>
+
+        <input type="text" placeholder="بحث..." class="search-input">
+
+        <!---- show menu in table ---->
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>القسم</th>
+                <th>الصنف</th>
+                <th>الوصف</th>
+                <th>السعر</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>شاورما لحم</td>
+                <td>شاورما لحم</td>
+                <td>سندوتش شاورما لحم بالتومية</td>
+                <td>45</td>
+                <td>
+                  <button class="edit-btn" (click)="showModal = true">عدل</button>
+                  <button class="delete-btn">امسح</button>
+                </td>
+              </tr>
+              <tr>
+                <td>فاهيتا فراخ</td>
+                <td>فاهيتا فراخ</td>
+                <td>فاهيتا فراخ مع جبنة</td>
+                <td>50</td>
+                <td>
+                  <button class="edit-btn" (click)="showModal = true">عدل</button>
+                  <button class="delete-btn">امسح</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!---- edit item in menu ---->
+        <div class="modal" *ngIf="showModal">
+          <div class="modal-content">
+            <h3>تعديل</h3>
+            <input placeholder="اسم الصنف">
+            <input placeholder="الوصف">
+            <input type="number" placeholder="السعر">
+            <button class="save">حفظ</button>
+            <button class="close" (click)="showModal = false">إلغاء</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!---- marquee ---->
+      <section *ngIf="activeSection === 'offers'" class="dashboard-section">
+        <h3>عدل شريط العرض</h3>
+          <div class="show-content">
+            <textarea placeholder="اكتب العرض اللي عايزه"></textarea>
+            <button>حفظ</button>
+        </div>    
+      </section>
+
+
+      <!---- swiper images ---->
+      <section *ngIf="activeSection === 'slider'" class="dashboard-section">
+        <h3>صور للعرض</h3>
+      
+        <label>
+          ارفع صورة للعرض:
+          <input type="file" accept="image/*" (change)="onSliderImageChange($event)">
+        </label>
+      
+        <div *ngIf="selectedSliderImage">
+          <img [src]="selectedSliderImage" width="200" class="m-1">
+          <br>
+          <button (click)="saveSliderImage()" class="m-1">حفظ</button>
+          <button (click)="cancelSliderImage()" class="m-1 btn bg-danger">إلغاء</button>
+        </div>
+      </section>
+
+
+    </main>
+  </div>
+
+
+</body> 

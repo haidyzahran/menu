@@ -1,0 +1,186 @@
+<body>
+  <!-- ----- header ----- -->
+  <header>
+      <div class="navbar">
+        <div class="logo"><a [routerLink]="['/home']"><img src="assets/images/logo.jpg" alt="logo"></a></div>
+
+        <ul class="links" [class.active]="menuOpen">
+          <li><a href="#" class="active">الرئيسية</a></li>
+          <li><a  (click)="scrollToSection('menuu')">قائمة الطعام</a></li>
+          <li><a  (click)="scrollToSection('location')">مكانا فين ؟</a></li>
+        </ul>
+
+        <a href="https://wa.me/201117495026" class="action-btn" target="_blank"><i class="fa-brands fa-whatsapp"></i> تواصل معنا علي واتساب </a>
+
+
+        <div class="toggle-btn" (click)="toggleMenu()">
+          <i [ngClass]="menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
+        </div>
+      </div>
+
+      <div class="dropdown-menu" [class.open]="menuOpen">
+        <li><a href="#">الرئيسية</a></li>
+        <li><a  (click)="scrollToSection('menuu')">قائمة الطعام</a></li>
+        <li><a  (click)="scrollToSection('location')">مكانا فين ؟</a></li>
+        <li><a href="https://wa.me/201117495026" class="action-btn" target="_blank"> <i class="fa-brands fa-whatsapp"></i> تواصل معنا علي واتساب</a></li>
+      </div>
+  </header>
+
+ <!-- ----- hero ----- -->
+  <div class="hero">
+      <div class="hero-title">
+        <h4>مطعم ومشويات</h4>
+        <h1>سيد الأكيل</h1>
+        <p>للصنعة ... أصول</p>
+      </div>    
+
+        <div class="info">
+            <div><i class="fa fa-phone-volume"></i> 01016806291</div>
+            <div><i class="fa-brands fa-whatsapp"></i> 01117495025</div>
+            <div><i class="fa fa-phone-volume"></i> 01206496939</div>
+
+            <div class="loc">
+                <i class="fa fa-location-dot"></i>
+                <div>مول الفيوتشر الدور الارضي اسكان المستقبل 63 -مدينة الشروق</div>
+            </div>
+        </div>
+  </div>
+
+
+ <!-- ----- marquee ----- -->
+  <section class="marquee-div">
+      <!-- <div class="marquee-header">عروض</div> -->
+      <marquee behavior="scroll" direction="right" class="offers-strip">
+        عروض اليوم: خصم 10% على طبق سمبوسة لحمة 5 قطع - طبق سمبوسة لحمة 5 قطع + طبق سمبوسة لحمة 5 قطع + طبق سمبوسة لحمة 5 قطع - طبق سمبوسة لحمة 5 قطع!
+      </marquee>
+  </section>
+
+
+
+ <!-- ----- swiper ----- -->
+  <div class="slider-wrapper card-zoom-in">
+  <div class="card-list">
+    <div
+      class="card-item"
+      *ngFor="let img of getVisibleSlides()"
+    >
+      <img [src]="img" class="card-image" />
+    </div>
+  </div>
+
+  <button class="arrow left" (click)="prev()"><i class="fa fa-arrow-circle-left"></i></button>
+  <button class="arrow right" (click)="next()"><i class="fa fa-arrow-circle-right"></i></button>
+  </div>
+
+
+ <!-- ----- categories ----- -->
+<div class="cat-sec">
+  <h4 class="categories-header">أقسام الطعام</h4>
+  <div class="categories" id="menuu">
+    <section class="menu-section">
+      <!-- <h4>أقسام الطعام</h4> -->
+      <div class="items">
+        <div class="item" *ngFor="let category of menu" (click)="scrollToSection(category.title)">
+          <h6>{{ category.title }}</h6>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+ <!-- ----- menu ----- -->
+  <section class="menu-content">
+
+    <div class="row" *ngFor="let section of menu">
+      <h3 [id]="section.title">{{ section.title }}</h3>   
+
+      <div class="all-cards">
+
+        <div class="card card-rtl" *ngFor="let item of section.items">
+          <img [src]="item.imgUrl || 'assets/images/food1.jpeg'">
+          <div class="card-right">
+            <h6>{{ item.name }}</h6>
+            <p>{{ item.description }}</p>
+
+            <div class="price-span">
+              <div *ngFor="let key of getKeys(item.price)">
+                {{ key === '' ? 'سعر' : key }} 
+                <span>{{ (item.price)[key] }} </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" *ngIf="section.note">{{ section.note }}</p>
+    </div>
+
+  </section>
+
+
+
+  <!-- ----- testimonials ----- -->
+  <section class="testimonials">
+    <h2>عملاءنا بيقولاوا علينا ايه ؟</h2>
+    <p style="color: #666666;">كومنتس من صفحتنا علي فيس بوك</p>
+
+    <div class="row">
+        <div class="testimonial-col">
+            <img src="assets/images/human1.jpeg">
+            <div>
+                <p>الاكل هنا حلو اوي والبيتزا تحفة يباب بتيبى بلتل لالال لالل لاللال لللاال للل ضمبتيب بينستمبيل يبتالنيا يسنتامنيبلتابلا لقاثمتا قلبيسل</p>
+                <h3>Mohammed Mahmoud </h3>
+                <i class="far fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+        </div>
+        <div class="testimonial-col">
+            <img src="assets/images/human2.jpeg">
+            <div>
+                <p>الاكل هنا حلو اوي والبيتزا تحفة يباب بتيبى بلتل لالال لالل لاللال لللاال للل ضمبتيب بينستمبيل يبتالنيا يسنتامنيبلتابلا لقاثمتا قلبيسل</p>
+                <h3>Sara Ahmed</h3>
+                <i class="fa fa-star-half-stroke"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+        </div>
+
+    </div>
+
+  </section> 
+
+
+  <!-- ----- location ----- -->
+  <div class="location-block">
+      
+    <div id="location">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20635544.32246719!2d56.75717540679751!3d26.76396099676411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7f10c28fd80f7%3A0xb21c8c142a3e3caa!2z2YXYt9i52YUg2KfZhNin2YPZitmE!5e0!3m2!1sar!2seg!4v1754077919869!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>      
+
+  </div>
+ 
+
+  <!-- ----- Footer ----- -->
+  <section class="footer">
+      <h4>About Us</h4>
+      <p> مطعم سيد الأكيل - للصنعة أصول <br> بنقدم جميع انواع الطعام المشوي والمقلي</p>
+
+      <div class="icons">
+          <i class="fa-brands fa-facebook-f"></i>
+          <i class="fa-brands fa-twitter"></i>
+          <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-linkedin-in"></i>
+      </div>
+
+      <p>Made with <i class="far fa-heart"></i></p>
+
+  </section>  
+
+
+</body>
